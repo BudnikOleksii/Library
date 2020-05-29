@@ -9,6 +9,10 @@ $('div').click(function() {
     console.log($(this).index());
 });
 
-console.log($('div').eq(2).find('.some'));
+// console.log($('div').eq(2).find('.some'));
+// fix it
+// console.log($('.some').closest('.findmeq').addClass('daggs'));
+
+console.log($('.findme').siblings());
 
 // console.log($('button').html('hello'));
