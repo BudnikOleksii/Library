@@ -13,6 +13,7 @@ $('div').click(function() {
 // fix it
 // console.log($('.some').closest('.findmeq').addClass('daggs'));
 
-console.log($('.findme').siblings());
+// console.log($('.findme').siblings());
+$('button').fadeIn(1800);
 
 // console.log($('button').html('hello'));
