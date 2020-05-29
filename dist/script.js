@@ -2352,8 +2352,8 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').click(function (
 // fix it
 // console.log($('.some').closest('.findmeq').addClass('daggs'));
 // console.log($('.findme').siblings());
-
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').fadeIn(1800); // console.log($('button').html('hello'));
+// $('button').fadeIn(1800);
+// console.log($('button').html('hello'));
 
 /***/ })
 

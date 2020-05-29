@@ -14,6 +14,6 @@ $('div').click(function() {
 // console.log($('.some').closest('.findmeq').addClass('daggs'));
 
 // console.log($('.findme').siblings());
-$('button').fadeIn(1800);
+// $('button').fadeIn(1800);
 
 // console.log($('button').html('hello'));
