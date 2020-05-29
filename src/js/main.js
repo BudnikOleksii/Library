@@ -2,7 +2,13 @@ import './lib/lib';
 import $ from './lib/lib';
 
 $('button').on('click', function() {
-    $(this).hide().show().toggleClass('active');
+    $('div').eq(1).toggleClass('active');
 });
 
-$('div').toggleAttribute('value', '100').removeAttribute('value').addAttribute('data', 'sags');
+$('div').click(function() {
+    console.log($(this).index());
+});
+
+console.log($('div').eq(2).find('.some'));
+
+// console.log($('button').html('hello'));
