@@ -45,3 +45,6 @@ $('#trigger').click(() => $('#trigger').createModal({
         ]
     }
 }));
+
+$().get('https://gorest.co.in/public-api/users?_format=json&access-token=ex3rSEFcY1AXKjsiPE56prRh54Vj0k-YXEBF')
+    .then(res => console.log(res));
