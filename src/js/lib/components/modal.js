@@ -7,23 +7,44 @@ $.prototype.modal = function() {
             e.preventDefault();
             $(target).fadeIn(500);
             document.body.style.overflow ='hidden';
+            document.body.style.marginRight = `${scroll}px`;
         });
     }
 
-    const closeElements = document.querySelectorAll('[data-close]');
+    const closeElements = document.querySelectorAll('[data-close]'),
+          scroll = calcScroll();
+
+    function closeModal() {
+        $('.modal').fadeOut(500);
+        document.body.style.overflow ='';
+        document.body.style.marginRight = `0px`;
+    }
     closeElements.forEach(elem => {
         $(elem).click(() => {
-            $('.modal').fadeOut(500);
-            document.body.style.overflow ='';
+            closeModal();
         });        
     });
 
     $('.modal').click(e => {
         if (e.target.classList.contains('modal')) {
-            $('.modal').fadeOut(500);
-            document.body.style.overflow ='';
+            closeModal();
         }
     });
+
+    function calcScroll() {
+        let div = document.createElement('div');
+
+        div.style.width = '50px';
+        div.style.height = '50px';
+        div.style.overflow = 'scroll';
+        div.style.visibility = 'hidden';
+
+        document.body.appendChild(div);
+        let scrollWidth = div.offsetWidth - div.clientWidth;
+        div.remove();
+
+        return scrollWidth;
+    }
 };
 
 $('[data-toggle="modal"]').modal();
