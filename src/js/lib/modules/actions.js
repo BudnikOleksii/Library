@@ -28,21 +28,18 @@ $.prototype.eq = function(i) {
 
 $.prototype.index = function() {
     const parent = this[0].parentNode;
-    // html collection to array with spread operator
-    const childs = [...parent.children];
+    const children = [...parent.children];
 
-    // return only which we looking for
     const findMyIndex = (item) => {
         return item == this[0];
     };
 
-    // findIndex only for arrays
-    return childs.findIndex(findMyIndex);
+    return children.findIndex(findMyIndex);
 };
 
 $.prototype.find = function(selector) {
-    let numberOfItems = 0;
-    let counter = 0;
+    let numberOfItems = 0,
+        counter = 0;
 
     const copyObj = Object.assign({}, this);
 
@@ -70,12 +67,16 @@ $.prototype.find = function(selector) {
     return this;
 };
 
-$.prototype.closest = function(selector) {
+$.prototype.closestElem = function(selector) {
     let counter = 0;
 
     for (let i = 0; i < this.length; i++) {
-        this[i] = this[i].closest(selector);
-        counter++;
+        if (this[i].closest(selector) === null) {
+            continue;
+        } else {
+            this[i] = this[i].closest(selector);
+            counter++;
+        }
     }
 
     const objLength = Object.keys(this).length;
@@ -87,8 +88,8 @@ $.prototype.closest = function(selector) {
 };
 
 $.prototype.siblings = function() {
-    let numberOfItems = 0;
-    let counter = 0;
+    let numberOfItems = 0,
+        counter = 0;
 
     const copyObj = Object.assign({}, this);
 
@@ -99,6 +100,7 @@ $.prototype.siblings = function() {
             if (copyObj[i] === arr[j]) {
                 continue;
             }
+
             this[counter] = arr[j];
             counter++;
         }

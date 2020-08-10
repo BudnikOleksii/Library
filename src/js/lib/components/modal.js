@@ -3,36 +3,33 @@ import $ from '../core';
 $.prototype.modal = function(created) {
     for (let i = 0; i < this.length; i++) {
         const target = this[i].getAttribute('data-target');
+        let scroll = calcScroll();
+        
         $(this[i]).click((e) => {
             e.preventDefault();
             $(target).fadeIn(500);
             document.body.style.overflow ='hidden';
             document.body.style.marginRight = `${scroll}px`;
         });
-
-        const closeElements = document.querySelectorAll(`${target} [data-close]`),
-              scroll = calcScroll();
-    
-        function closeModal() {
-            $(target).fadeOut(500);
-            document.body.style.overflow ='';
-            document.body.style.marginRight = `0px`;
-            if (created) {
-                document.querySelector(target).remove();
-            }
-        }
-
-        closeElements.forEach(elem => {
-            $(elem).click(() => {
-                closeModal();
-            });        
+        
+        $(`${target} [data-close]`).click(() => {
+            closeModal(target);
         });
     
         $(target).click(e => {
             if (e.target.classList.contains('modal')) {
-                closeModal();
+                closeModal(target);
             }
         });
+    }
+    
+    function closeModal(target) {
+        $(target).fadeOut(500);
+        document.body.style.overflow ='';
+        document.body.style.marginRight = `0px`;
+        if (created) {
+            document.querySelector(target).remove();
+        }
     }
 
     function calcScroll() {
@@ -53,52 +50,52 @@ $.prototype.modal = function(created) {
 
 $('[data-toggle="modal"]').modal();
 
-$.prototype.createModal = function({text, btns} = {}) {
-    for (let i = 0; i < this.length; i++) {
-        let modal = document.createElement('div');
-        modal.classList.add('modal');
-        modal.setAttribute('id', this[i].getAttribute('data-target').slice(1));
+$.prototype.createModal = function({txtTitle, txtBody, btnCount, btnSettings} = {}) {
+	for (let i = 0; i < this.length; i++) {
+		let modal = document.createElement('div');
+		$(modal).addClass('modal');
+		$(modal).setAttr('id', $(this[i]).getAttr('data-target').slice(1));
 
-        // btns = {count: num, settings: [[text, classNames=[], close, cb]]}
-        const buttons = [];
-        for (let j = 0; j < btns.count; j++) {
-            let btn = document.createElement('button');
-            btn.classList.add('btn', ...btns.settings[j][1]);
-            btn.textContent = btns.settings[j][0];
-            if (btns.settings[j][2]) {
-                btn.setAttribute('data-close', 'true');
+		const buttons = [];
+		for (let j = 0; j < btnCount; j++) {
+			let btn = document.createElement('button');
+			$(btn).addClass('btn', ...btnSettings[j][1]);
+			btn.textContent = btnSettings[j][0];
+			if (btnSettings[j][2]) {
+				$(btn).setAttr('data-close', 'true');
             }
-            if (btns.settings[j][3] && typeof(btns.settings[j][3]) === 'function') {
-                btn.addEventListener('click', btns.settings[j][3]);
+            
+			if (btnSettings[j][3] && typeof(btnSettings[j][3]) === 'function') {
+				$(btn).click(btnSettings[j][3]);
             }
+            
+			buttons.push(btn);
+		}
 
-            buttons.push(btn);
-        }
+		$(modal).html(
+			`<div class="modal-dialog">
+				<div class="modal-content">
+					<button class="close" data-close>
+						<span>&times;</span>
+					</button>
+					<div class="modal-header">
+						<div class="modal-title">
+							${txtTitle}
+						</div>
+					</div>
+					<div class="modal-body">
+						${txtBody}
+					</div>
+					<div class="modal-footer">
+						
+					</div>
+				</div>
+			</div>`
+		);
 
-        modal.innerHTML = `
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button class="close" data-close>
-                    <span>&times;</span>
-                </button>
-                <div class="modal-header">
-                    <div class="modal-title">
-                        ${text.title}
-                    </div>
-                </div>
-                <div class="modal-body">
-                    ${text.body}
-                </div>
-                <div class="modal-footer">
-                    
-                </div>
-            </div>
-        </div>
-        `;
-
-        modal.querySelector(".modal-footer").append(...buttons);
-        document.body.append(modal);
-        $(this[i]).modal(true);
-        $(this[i].getAttribute('data-target')).fadeIn(500);
-    }
+		modal.querySelector(".modal-footer").append(...buttons);
+		document.body.appendChild(modal);
+		$(this[i]).modal(true);
+		$($(this[i]).getAttr('data-target')).fadeIn(300);
+	}
 };

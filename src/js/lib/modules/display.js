@@ -1,10 +1,11 @@
 import $ from '../core';
 
 $.prototype.show = function() {
-    for(let i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++) {
         if (!this[i].style) {
             continue;
         }
+
         this[i].style.display = '';
     }
 
@@ -12,18 +13,19 @@ $.prototype.show = function() {
 };
 
 $.prototype.hide = function() {
-    for(let i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++) {
         if (!this[i].style) {
             continue;
         }
+
         this[i].style.display = 'none';
     }
 
     return this;
 };
 
-$.prototype.toggle = function() {
-    for(let i = 0; i < this.length; i++) {
+$.prototype.toggleDisplay = function() {
+    for (let i = 0; i < this.length; i++) {
         if (!this[i].style) {
             continue;
         }

@@ -1,1 +1,1 @@
-import $ from './lib/lib';
+import './lib/lib';

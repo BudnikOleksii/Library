@@ -1,10 +1,10 @@
-const $ = function (selector) {
+const $ = function(selector) {
     return new $.prototype.init(selector);
 };
 
-$.prototype.init = function (selector) {
+$.prototype.init = function(selector) {
     if (!selector) {
-        return this; // {empty object}
+        return this; // {}
     }
 
     if (selector.tagName) {
@@ -15,6 +15,7 @@ $.prototype.init = function (selector) {
 
     Object.assign(this, document.querySelectorAll(selector));
     this.length = document.querySelectorAll(selector).length;
+
     return this;
 };
 
